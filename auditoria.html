@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Auditoría Corporativa</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:       #0d1b2a;
+      --gold:       #c9a84c;
+      --gold-light: #e6c97a;
+      --cream:      #f4f0e6;
+      --white:      #ffffff;
+      --gray:       #8a8f99;
+      --line:       rgba(201,168,76,0.25);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--navy);
+      color: var(--cream);
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none; z-index: 0; opacity: 0.35;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.1rem 3rem;
+      background: rgba(13,27,42,0.95);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--line);
+    }
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem; letter-spacing: 0.12em;
+      color: var(--gold); text-transform: uppercase;
+    }
+    .nav-links { display: flex; gap: 2rem; align-items: center; }
+    .nav-links a {
+      font-size: 0.78rem; letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--cream); text-decoration: none; opacity: 0.7;
+      transition: opacity 0.2s, color 0.2s;
+    }
+    .nav-links a:hover { opacity: 1; color: var(--gold); }
+
+    /* mobile: nav en dos filas */
+    @media (max-width: 600px) {
+      nav {
+        flex-direction: column; align-items: flex-start;
+        padding: 0.9rem 1.5rem; gap: 0.6rem;
+      }
+      .nav-links { gap: 1.2rem; }
+      .nav-links a { font-size: 0.72rem; opacity: 0.8; }
+    }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative; min-height: 100vh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center; padding: 9rem 2rem 4rem;
+      overflow: hidden;
+    }
+    .hero::after {
+      content: ''; position: absolute; inset: 0;
+      background: repeating-linear-gradient(
+        -55deg, transparent, transparent 60px,
+        rgba(201,168,76,0.04) 60px, rgba(201,168,76,0.04) 61px
+      );
+      pointer-events: none;
+    }
+    .hero-eyebrow {
+      font-size: 0.72rem; letter-spacing: 0.3em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 1.5rem;
+      opacity: 0; animation: fadeUp 0.8s 0.2s forwards;
+    }
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.6rem, 7vw, 6rem);
+      font-weight: 900; line-height: 1.05;
+      color: var(--white); max-width: 780px;
+      opacity: 0; animation: fadeUp 0.8s 0.4s forwards;
+    }
+    .hero h1 em { font-style: italic; color: var(--gold); }
+    .hero-sub {
+      margin-top: 1.5rem; max-width: 500px;
+      font-size: 1rem; line-height: 1.7; color: var(--gray);
+      opacity: 0; animation: fadeUp 0.8s 0.6s forwards;
+    }
+    .divider {
+      width: 60px; height: 2px; background: var(--gold);
+      margin: 2.5rem auto;
+      opacity: 0; animation: fadeUp 0.8s 0.7s forwards;
+    }
+    .cta-group {
+      display: flex; gap: 1.25rem; flex-wrap: wrap; justify-content: center;
+      opacity: 0; animation: fadeUp 0.8s 0.85s forwards;
+    }
+    .btn {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      padding: 1rem 2.2rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.82rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase;
+      text-decoration: none; border-radius: 2px;
+      transition: transform 0.25s, box-shadow 0.25s, background 0.25s;
+    }
+    .btn-primary { background: var(--gold); color: var(--navy); box-shadow: 0 4px 24px rgba(201,168,76,0.25); }
+    .btn-primary:hover { background: var(--gold-light); transform: translateY(-3px); }
+    .btn-outline { background: transparent; color: var(--cream); border: 1px solid rgba(244,240,230,0.3); }
+    .btn-outline:hover { border-color: var(--gold); color: var(--gold); transform: translateY(-3px); }
+    .btn svg { width: 16px; height: 16px; }
+    @media (max-width: 480px) { .cta-group { flex-direction: column; align-items: center; } }
+
+    /* ── SECTIONS ── */
+    section {
+      position: relative; z-index: 1;
+      padding: 6rem 2rem; max-width: 1100px; margin: 0 auto;
+    }
+    #objetivos { scroll-margin-top: 100px; }
+    #empresa   { scroll-margin-top: 100px; }
+    .section-label { font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; }
+    .section-title { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 700; color: var(--white); line-height: 1.15; margin-bottom: 1.5rem; }
+    .section-body { font-size: 0.95rem; line-height: 1.8; color: var(--gray); max-width: 580px; }
+    .sep { border: none; border-top: 1px solid var(--line); margin: 0 2rem; }
+
+    /* ── OBJECTIVES ── */
+    .obj-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; margin-top: 3rem; }
+    .obj-card {
+      background: rgba(255,255,255,0.03); border: 1px solid var(--line); border-radius: 4px; padding: 2rem;
+      transition: background 0.3s, border-color 0.3s, transform 0.3s;
+    }
+    .obj-card:hover { background: rgba(201,168,76,0.06); border-color: var(--gold); transform: translateY(-4px); }
+    .obj-num { font-family: 'Playfair Display', serif; font-size: 2.5rem; font-weight: 900; color: rgba(201,168,76,0.2); line-height: 1; margin-bottom: 0.75rem; }
+    .obj-card h3 { font-size: 0.95rem; font-weight: 500; color: var(--cream); margin-bottom: 0.5rem; }
+    .obj-card p { font-size: 0.85rem; line-height: 1.7; color: var(--gray); }
+
+    /* ── EMPRESA ── */
+    .empresa-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; margin-top: 3rem; align-items: start; }
+    @media (max-width: 768px) { .empresa-layout { grid-template-columns: 1fr; gap: 2.5rem; } }
+    .data-list { list-style: none; }
+    .data-list li { display: flex; flex-direction: column; padding: 1.2rem 0; border-bottom: 1px solid var(--line); }
+    .data-list li:first-child { border-top: 1px solid var(--line); }
+    .data-key { font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.3rem; }
+    .data-val { font-size: 1rem; color: var(--cream); }
+    .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+    @media (max-width: 480px) { .stat-grid { grid-template-columns: 1fr; } }
+    .stat-box { background: rgba(255,255,255,0.03); border: 1px solid var(--line); border-radius: 4px; padding: 1.75rem; display: flex; flex-direction: column; gap: 0.3rem; }
+    .stat-val { font-family: 'Playfair Display', serif; font-size: 2.2rem; font-weight: 900; color: var(--gold); }
+    .stat-lbl { font-size: 0.78rem; color: var(--gray); }
+
+    /* ── FOOTER ── */
+    footer { border-top: 1px solid var(--line); background: rgba(6,14,24,0.8); }
+    .footer-inner {
+      max-width: 1100px; margin: 0 auto;
+      display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 3rem; padding: 4rem 2rem 3rem;
+    }
+    @media (max-width: 768px) { .footer-inner { grid-template-columns: 1fr 1fr; gap: 2rem; } }
+    @media (max-width: 480px) { .footer-inner { grid-template-columns: 1fr; } }
+    .footer-logo { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--gold); letter-spacing: 0.1em; display: block; margin-bottom: 0.6rem; }
+    .footer-tagline { font-size: 0.8rem; color: var(--gray); letter-spacing: 0.05em; margin-bottom: 1.2rem; }
+    .footer-copy { font-size: 0.75rem; color: rgba(138,143,153,0.6); line-height: 1.6; }
+    .footer-col { display: flex; flex-direction: column; gap: 0.65rem; }
+    .footer-col-title { font-size: 0.68rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.4rem; }
+    .footer-col a, .footer-col span { font-size: 0.85rem; color: var(--gray); text-decoration: none; line-height: 1.5; transition: color 0.2s; }
+    .footer-col a:hover { color: var(--cream); }
+    .footer-bottom {
+      border-top: 1px solid var(--line); max-width: 1100px; margin: 0 auto;
+      padding: 1.25rem 2rem; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem;
+    }
+    .footer-bottom span { font-size: 0.73rem; color: rgba(138,143,153,0.5); }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.6s, transform 0.6s; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <span class="nav-logo">AuditPro</span>
+    <div class="nav-links">
+      <a href="#objetivos">Objetivos</a>
+      <a href="#empresa">Empresa</a>
+      <a href="#contacto">Contacto</a>
+    </div>
+  </nav>
+
+  <div class="hero">
+    <p class="hero-eyebrow">Informe de Auditoría · 2025</p>
+    <h1>Auditoría <em>Corporativa</em> Integral</h1>
+    <p class="hero-sub">Análisis exhaustivo de procesos financieros, operativos y de cumplimiento para la toma de decisiones estratégicas.</p>
+    <div class="divider"></div>
+    <div class="cta-group">
+      <a href="#objetivos" class="btn btn-primary">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 8 12 12 14 14"/></svg>
+        Ver Objetivos
+      </a>
+      <a href="#empresa" class="btn btn-outline">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>
+        Datos de la Empresa
+      </a>
+    </div>
+  </div>
+
+  <hr class="sep">
+
+  <section id="objetivos">
+    <p class="section-label reveal">Alcance de la auditoría</p>
+    <h2 class="section-title reveal">Objetivos Estratégicos</h2>
+    <p class="section-body reveal">Los siguientes objetivos guían el proceso de auditoría, garantizando una revisión completa y alineada con los estándares internacionales vigentes.</p>
+    <div class="obj-grid">
+      <div class="obj-card reveal"><div class="obj-num">01</div><h3>Integridad Financiera</h3><p>Verificar la exactitud de los estados financieros y la correcta aplicación de principios contables.</p></div>
+      <div class="obj-card reveal"><div class="obj-num">02</div><h3>Control Interno</h3><p>Evaluar la eficacia de los controles internos y detectar posibles vulnerabilidades o riesgos operativos.</p></div>
+      <div class="obj-card reveal"><div class="obj-num">03</div><h3>Cumplimiento Normativo</h3><p>Asegurar el cumplimiento de la legislación vigente, regulaciones sectoriales y políticas internas.</p></div>
+      <div class="obj-card reveal"><div class="obj-num">04</div><h3>Eficiencia Operacional</h3><p>Identificar áreas de mejora en los procesos para optimizar recursos y reducir costos innecesarios.</p></div>
+      <div class="obj-card reveal"><div class="obj-num">05</div><h3>Gestión de Riesgos</h3><p>Mapear y priorizar los riesgos empresariales con recomendaciones para su mitigación efectiva.</p></div>
+      <div class="obj-card reveal"><div class="obj-num">06</div><h3>Gobierno Corporativo</h3><p>Revisar las estructuras de gobierno, responsabilidades y transparencia ante los grupos de interés.</p></div>
+    </div>
+  </section>
+
+  <hr class="sep">
+
+  <section id="empresa">
+    <p class="section-label reveal">Perfil auditado</p>
+    <h2 class="section-title reveal">Datos de la Empresa</h2>
+    <p class="section-body reveal">Información institucional de la organización sujeta a auditoría. Modifique estos campos con los datos reales de su empresa.</p>
+    <div class="empresa-layout">
+      <ul class="data-list reveal">
+        <li><span class="data-key">Razón Social</span><span class="data-val">Nombre de la Empresa S.A.</span></li>
+        <li><span class="data-key">RUT / NIF</span><span class="data-val">76.XXX.XXX-X</span></li>
+        <li><span class="data-key">Sector</span><span class="data-val">Servicios Financieros</span></li>
+        <li><span class="data-key">Representante Legal</span><span class="data-val">Nombre Apellido</span></li>
+        <li><span class="data-key">Período Auditado</span><span class="data-val">01 Enero – 31 Diciembre 2024</span></li>
+        <li><span class="data-key">Auditor Responsable</span><span class="data-val">AuditPro Consultores</span></li>
+        <li><span class="data-key">Fecha de Emisión</span><span class="data-val">Marzo 2025</span></li>
+      </ul>
+      <div class="stat-grid reveal">
+        <div class="stat-box"><span class="stat-val">$0M</span><span class="stat-lbl">Ingresos anuales</span></div>
+        <div class="stat-box"><span class="stat-val">000</span><span class="stat-lbl">Colaboradores</span></div>
+        <div class="stat-box"><span class="stat-val">0</span><span class="stat-lbl">Sucursales</span></div>
+        <div class="stat-box"><span class="stat-val">00 años</span><span class="stat-lbl">En el mercado</span></div>
+      </div>
+    </div>
+  </section>
+
+  <footer id="contacto">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <span class="footer-logo">AuditPro</span>
+        <p class="footer-tagline">Auditoría & Consultoría Corporativa</p>
+        <p class="footer-copy">© 2025 · Documento confidencial · Uso interno exclusivo</p>
+      </div>
+      <div class="footer-col">
+        <p class="footer-col-title">Navegación</p>
+        <a href="#objetivos">Objetivos</a>
+        <a href="#empresa">Empresa</a>
+        <a href="#contacto">Contacto</a>
+      </div>
+      <div class="footer-col">
+        <p class="footer-col-title">Contacto</p>
+        <a href="mailto:contacto@auditpro.cl">contacto@auditpro.cl</a>
+        <a href="tel:+56912345678">+56 9 1234 5678</a>
+        <span>Santiago, Chile</span>
+      </div>
+      <div class="footer-col">
+        <p class="footer-col-title">Legal</p>
+        <span>Informe confidencial</span>
+        <span>Uso interno exclusivo</span>
+        <span>Todos los derechos reservados</span>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>AuditPro Consultores SpA — 2025</span>
+      <span>Elaborado bajo estándares IAASB</span>
+    </div>
+  </footer>
+
+  <script>
+    const observer = new IntersectionObserver(
+      entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }),
+      { threshold: 0.12 }
+    );
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
