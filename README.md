@@ -88,5 +88,3 @@ Uso libre como plantilla. Puedes modificarla, distribuirla y adaptarla a tus pro
 Si la usas como base para un proyecto propio, se agradece una mención o estrella ⭐ al repositorio.
 
 ---
-
-*Generado como plantilla de código abierto para auditorías corporativas.*
